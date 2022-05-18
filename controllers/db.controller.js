@@ -1,8 +1,8 @@
 const db = require("../models/index.js");
 const Patients = db.patients;
 const Psychologists = db.psychologists;
-const Emotions = db.emotions;
-const Admins = db.admins;
+//const Emotions = db.emotions;
+//const Admins = db.admins;
 
 
 exports.postUser = async (req, res) => {

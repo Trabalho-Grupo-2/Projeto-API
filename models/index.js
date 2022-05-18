@@ -6,15 +6,18 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.URL;
 
+
+
 (async () => {
     try {
+        console.log(dbConfig)
         await db.mongoose.connect(db.url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
         console.log("Connected to the database!");
     } catch (error) {
-        console.log("Cannot connect to the database!", err);
+        console.log("Cannot connect to the database!", error);
         process.exit();
     }
 })();
