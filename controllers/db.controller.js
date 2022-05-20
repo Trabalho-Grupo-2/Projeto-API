@@ -110,25 +110,29 @@ exports.getUser = async (req, res) => {
 exports.getUserById = async (req, res) => {
 
     console.log("getUserById")
+    let dbPatients = null
+    let dbPsychologists = null
 
     try {
-        let id
-        const dbPatients = await Patients.find().exec
-
         if (req.url == "/patients/" + req.params.patient_id) {
             console.log("GET PATIENT ID: " + req.params.patient_id);
-            id = req.params.patient_id;
-            console.log(dbPatients)
+            dbPatients = await Patients.findById(req.params.patient_id).exec();
         }
 
         if (req.url == "/psychologists/" + req.params.psychologist_id) {
             console.log("GET PSYCHOLOGIST ID: " + req.params.psychologist_id)
-            id = req.params.psychologist_id;
+            dbPsychologists = await Psychologists.findById(req.params.psychologist_id).exec();
         }
-        res.status(201).json({
+
+        if ()
+
+        console.log(dbPatients)
+        console.log(dbPsychologists)
+
+        res.status(200).json({
             success: true,
             msg: "GET USER ID",
-            URL: `${req.url}/${id}`
+            url: `${req.url}`
         });
 
     } catch (err) {

@@ -26,14 +26,10 @@ module.exports = (mongoose) => {
         },
 
         avatar: {
-            type: String,
-            required: [false]
+            type: String, required: [false]
         },
-        emotionsgame1: {
-            emotion_id: {
-                type: Number,
-                Unique: true
-            },
+        emotionsgame1:[ {
+            emotion_id: { type: Number, Unique: true },
             name: {
                 type: String,
                 required: false
@@ -46,7 +42,7 @@ module.exports = (mongoose) => {
                 type: Number,
                 required: false
             }
-        },
+        }],
         emotionsgame2: {
             emotion_id: {
                 type: Number,
