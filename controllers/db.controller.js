@@ -113,10 +113,12 @@ exports.getUserById = async (req, res) => {
 
     try {
         let id
+        const dbPatients = await Patients.find().exec
 
         if (req.url == "/patients/" + req.params.patient_id) {
             console.log("GET PATIENT ID: " + req.params.patient_id);
             id = req.params.patient_id;
+            console.log(dbPatients)
         }
 
         if (req.url == "/psychologists/" + req.params.psychologist_id) {
