@@ -4,10 +4,11 @@ const Psychologists = db.psychologists;
 const Emotions = db.emotions;
 const Admins = db.admins;
 
+//POST GET USER
 
 exports.postUser = async (req, res) => {
 
-    console.log("CREATE USER")
+    console.log("POST USER")
 
     try {
         let id
@@ -19,7 +20,7 @@ exports.postUser = async (req, res) => {
         }
         if (req.url == "/patients") {
 
-            console.log("CREATE PATIENT")
+            console.log("POST PATIENT")
 
             if (req.body.passwordConfirm == req.body.password) {
                 const patient = new Patients({
@@ -33,7 +34,7 @@ exports.postUser = async (req, res) => {
         }
         if (req.url == "/psychologists") {
 
-            console.log("CREATE PSYCHOLOGIST")
+            console.log("POST PSYCHOLOGIST")
 
             if (req.body.passwordConfirm == req.body.password) {
                 const psychologist = new Psychologists({
@@ -64,7 +65,7 @@ exports.postUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
 
-    console.log("LOGIN USER")
+    console.log("GET USER")
 
     try {
         if (req.body.name == "") {
@@ -102,6 +103,142 @@ exports.getUser = async (req, res) => {
     res.status(200).json({
         message: 'Login'
     });
+}
+
+//GET DELETE PATCH BY ID
+
+exports.getUserById = async (req, res) => {
+
+    console.log("getUserById")
+
+    try {
+        let id
+
+        if (req.url == "/patients/" + req.params.patient_id) {
+            console.log("GET PATIENT ID: " + req.params.patient_id);
+            id = req.params.patient_id;
+        }
+
+        if (req.url == "/psychologists/" + req.params.psychologist_id) {
+            console.log("GET PSYCHOLOGIST ID: " + req.params.psychologist_id)
+            id = req.params.psychologist_id;
+        }
+        res.status(201).json({
+            success: true,
+            msg: "GET USER ID",
+            URL: `${req.url}/${id}`
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later." + err
+        });
+    }
+}
+
+exports.deleteUserById = async (req, res) => {
+
+    console.log("deleteUserById")
+
+    try {
+        let id
+
+        if (req.url == "/patients/" + req.params.patient_id) {
+            console.log("DELETE PATIENT ID: " + req.params.patient_id);
+            id = req.params.patient_id;
+        }
+
+        if (req.url == "/psychologists/" + req.params.psychologist_id) {
+            console.log("DELETE PSYCHOLOGIST ID: " + req.params.psychologist_id)
+            id = req.params.psychologist_id;
+        }
+        res.status(201).json({
+            success: true,
+            msg: "DELETE USER ID",
+            URL: `${req.url}/${id}`
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later." + err
+        });
+    }
+}
+
+exports.patchUserById = async (req, res) => {
+
+    console.log("patchUserById")
+
+    try {
+        let id
+
+        if (req.url == "/patients/" + req.params.patient_id) {
+            console.log("PATCH PATIENT ID: " + req.params.patient_id);
+            id = req.params.patient_id;
+        }
+
+        if (req.url == "/psychologists/" + req.params.psychologist_id) {
+            console.log("PATCH PSYCHOLOGIST ID: " + req.params.psychologist_id)
+            id = req.params.psychologist_id;
+        }
+        res.status(201).json({
+            success: true,
+            msg: "PATCH USER ID",
+            URL: `${req.url}/${id}`
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later." + err
+        });
+    }
+}
+
+//EXTRA
+
+exports.deleteUser = async (req, res) => {
+    if (req.url == "/patients") {
+        try {
+            const patient = await Patients.findByIdAndRemove(req.params.patient._id).exec();
+            if (!patient)
+                res.status(404).json({
+                    message: `Cannot delete Patient with id=${req.params.patient._id}. Maybe Patient was not found!`
+                });
+            else
+                res.status(204).json({
+                    success: true,
+                    msg: `Pacient id=${req.params.patient._id} was deleted successfully.`
+                });
+        } catch (err) {
+            res.status(500).json({
+                success: false,
+                msg: "Something went wrong. Please try again later."
+            });
+        };
+    };
+    if (req.url == "/psychologists") {
+        try {
+            const psychologist = await Psychologists.findByIdAndRemove(req.params.psychologist._id).exec();
+            if (!psychologist)
+                res.status(404).json({
+                    message: `Cannot delete Psychologist with id=${req.params.psychologist._id}. Maybe Psychologist was not found!`
+                });
+            else
+                res.status(204).json({
+                    success: true,
+                    msg: `Pshycologist id=${req.params.psychologist._id} was deleted successfully.`
+                });
+        } catch (err) {
+            res.status(500).json({
+                success: false,
+                msg: "Something went wrong. Please try again later."
+            });
+        };
+    };
+
 }
 
 exports.patchUser = async (req, res) => {
@@ -212,45 +349,3 @@ exports.patchUser = async (req, res) => {
         }
     };
 }
-
-exports.deleteUser = async (req, res) => {
-    if (req.url == "/patients") {
-        try {
-            const patient = await Patients.findByIdAndRemove(req.params.patient._id).exec();
-            if (!patient)
-                res.status(404).json({
-                    message: `Cannot delete Patient with id=${req.params.patient._id}. Maybe Patient was not found!`
-                });
-            else
-                res.status(204).json({
-                    success: true,
-                    msg: `Pacient id=${req.params.patient._id} was deleted successfully.`
-                });
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                msg: "Something went wrong. Please try again later."
-            });
-        };
-    };
-    if (req.url == "/psychologists") {
-        try {
-            const psychologist = await Psychologists.findByIdAndRemove(req.params.psychologist._id).exec();
-            if (!psychologist)
-                res.status(404).json({
-                    message: `Cannot delete Psychologist with id=${req.params.psychologist._id}. Maybe Psychologist was not found!`
-                });
-            else
-                res.status(204).json({
-                    success: true,
-                    msg: `Pshycologist id=${req.params.psychologist._id} was deleted successfully.`
-                });
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                msg: "Something went wrong. Please try again later."
-            });
-        };
-    };
-
-};
