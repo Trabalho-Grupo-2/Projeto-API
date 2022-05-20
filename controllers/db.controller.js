@@ -1,8 +1,8 @@
 const db = require("../models/index.js");
 const Patients = db.patients;
 const Psychologists = db.psychologists;
-//const Emotions = db.emotions;
-//const Admins = db.admins;
+const Emotions = db.emotions;
+const Admins = db.admins;
 
 
 exports.postUser = async (req, res) => {
@@ -96,7 +96,7 @@ exports.getUser = async (req, res) => {
     } catch (err) {
         res.status(500).json({
             success: false,
-            msg: "Something went wrong. Please try again later."
+            msg: "Something went wrong. Please try again later." + err
         });
     }
     res.status(200).json({

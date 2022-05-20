@@ -3,14 +3,16 @@ const dbController = require("../controllers/db.controller");
 
 let router = express.Router();
 
-// router.route('/login')
-//     .post(dbController.getUser)
 
 router.route('/patients')
-    .post(dbController.postUser)//
+.post(dbController.postUser)//
 
 router.route('/psychologists')
-    .post(dbController.postUser)//
+.post(dbController.postUser)//
+
+router.route('/login')
+.post(dbController.getUser)
+
 
 // router.route('/patients/:patient_id')
 //     .get(dbController.getUser)
@@ -23,7 +25,7 @@ router.route('/psychologists')
 //     .patch(dbController.patchUser)
 
 router.all('*', function (req, res) {
-    res.status(404).json({ message: 'EmoChamp: Not Found' });
+    res.status(404).json({ sucess: false, message: 'EmoChamp: Route Not Found' });
 })
 
 module.exports = router;
