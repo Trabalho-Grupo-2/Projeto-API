@@ -7,7 +7,7 @@ module.exports = (mongoose) => {
 
         name: {
             type: String,
-            required: [true, 'What is your name?']
+            required: [true, 'Please a valide username']
         },
 
         description: {
@@ -17,50 +17,48 @@ module.exports = (mongoose) => {
 
         email: {
             type: String,
-            required: [true, 'What is your email?']
+            required: [true, 'Please a valid email']
         },
 
         password: {
             type: String,
-            required: [true, 'What is your password?']
+            required: [true, 'Please a valid password']
         },
 
         avatar: {
-            type: String, required: [false]
+            type: String,
+            required: [false]
         },
-        emotionsgame1:[ {
-            emotion_id: { type: Number, Unique: true },
-            name: {
-                type: String,
-                required: false
+
+        emotionsgame1: [{
+            emotion_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "emotions"
             },
             right_answers: {
                 type: Number,
-                required: false
+                default: 0
             },
             wrong_answers: {
                 type: Number,
-                required: false
+                default: 0
             }
         }],
-        emotionsgame2: {
+
+        emotionsgame2: [{
             emotion_id: {
-                type: Number,
-                Unique: true
-            },
-            name: {
-                type: String,
-                required: false
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "emotions"
             },
             right_answers: {
                 type: Number,
-                required: false
+                default: 0
             },
             wrong_answers: {
                 type: Number,
-                required: false
+                default: 0
             }
-        }
+        }]
     });
     const Patients = mongoose.model("patients", schema);
     return Patients;

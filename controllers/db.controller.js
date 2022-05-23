@@ -63,6 +63,83 @@ exports.postUser = async (req, res) => {
     }
 }
 
+exports.postUser = async (req, res) => {
+
+    console.log("POST USER")
+
+    try {
+        let id
+
+        let pat = await Patients.findOne({
+            name: req.body.name
+        });
+        let psy = await Psychologists.findOne({
+            name: req.body.name
+        });
+
+        if (pat != null || psy != null) {
+            return res.status(401).json({
+                success: false,
+                msgs: "Username already exists"
+            })
+        }
+
+        if (!req.body && !req.body.username && !req.body.password)
+            return res.status(400).json({
+                success: false,
+                msg: "Username and password are mandatory"
+            });
+
+        if (req.url == "/patients") {
+
+            console.log("POST PATIENT")
+
+            const patient = new Patients({
+                name: req.body.name,
+                email: req.body.email,
+                password: bcrypt.hashSync(req.body.password, 10),
+                description: "",
+                avatar: "",
+                emotionsgame1: [],
+                emotionsgame2: []
+            })
+            let newPat = await patient.save()
+            id = newPat._id
+
+        }
+        if (req.url == "/psychologists") {
+
+            console.log("POST PSYCHOLOGIST")
+
+            const psychologist = new Psychologists({
+                name: req.body.name,
+                email: req.body.email,
+                password: bcrypt.hashSync(req.body.password, 10),
+                description: "",
+                avatar: "",
+                patients: []
+            })
+            let newpsy = await psychologist.save()
+            id = newpsy._id
+        }
+
+        return res.status(201).json({
+            success: true,
+            msg: "New User created.",
+            URL: `${req.url}/${id}`
+        });
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        });
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later"
+        });
+    }
+}
+
 exports.getUser = async (req, res) => {
 
     console.log("GET USER")
@@ -123,7 +200,7 @@ exports.getUserById = async (req, res) => {
             console.log("GET PSYCHOLOGIST ID: " + req.params.psychologist_id)
             dbPsychologists = await Psychologists.findById(req.params.psychologist_id).exec();
         }
-        
+
         console.log(dbPatients)
         console.log(dbPsychologists)
 

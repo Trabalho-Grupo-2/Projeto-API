@@ -17,12 +17,12 @@ module.exports = (mongoose) => {
 
         email: {
             type: String,
-            required: [true, 'What is your email?']
+            required: [true, 'Please a valid email']
         },
 
         password: {
             type: String,
-            required: [true, 'What is your password?']
+            required: [true, 'Please a valid password']
         },
 
         avatar: {
@@ -31,8 +31,8 @@ module.exports = (mongoose) => {
         },
 
         patients: {
-            type: String,
-            required: [false]
+            type: mongoose.Schema.Types.ObjectId,
+            re: "patients"
         }
     }, {
         timestamps: false

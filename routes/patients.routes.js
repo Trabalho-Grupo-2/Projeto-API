@@ -1,10 +1,8 @@
 const express = require('express');
-const adminController = require("../controllers/admin.controller");
+const patientsController = require("../controllers/patients.controller");
 
 let router = express.Router();
 
-router.route('/')
-.post(adminController.postAdmin)
 
 
 
