@@ -123,9 +123,7 @@ exports.getUserById = async (req, res) => {
             console.log("GET PSYCHOLOGIST ID: " + req.params.psychologist_id)
             dbPsychologists = await Psychologists.findById(req.params.psychologist_id).exec();
         }
-
-        if ()
-
+        
         console.log(dbPatients)
         console.log(dbPsychologists)
 

@@ -19,7 +19,8 @@ app.get('/', function (req, res) {
     });
 });
 
-app.use('/', require('./routes/db.routes.js'))
+//app.use('/', require('./routes/db.routes.js'))
+app.use('/admin', require('./routes/admin.routes.js'))
 
 app.all('*', function (req, res) {
     res.status(404).json({
