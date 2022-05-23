@@ -1,3 +1,3 @@
 const db = require("../models/index.js");
 
-const Psychologists = db.psychologists;
+const Emotions = db.emotions;
