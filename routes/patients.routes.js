@@ -7,6 +7,9 @@ let router = express.Router();
 router.route('/')
 .post(patientsController.postPatient)
 
+router.route('/:patient_id')
+.get(patientsController.getPatientById)
+
 
 router.all('*', function (req, res) {
     res.status(404).json({ sucess: false, message: 'EmoChamp: Route Not Found' });

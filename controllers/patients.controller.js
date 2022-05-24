@@ -65,3 +65,40 @@ exports.postPatient = async (req, res) => {
         });
     }
 }
+
+exports.getPatientById = async function (req, res) {
+
+    console.log("GET PATIENT BY ID")
+
+    try {
+
+        if (!req.body && !req.body.username && !req.body.password)
+            return res.status(400).json({
+                success: false,
+                msg: "Username and password are mandatory"
+            });
+
+        let dbPat = await Patients.findById(req.params.patient_id).exec();
+
+        res.status(200).json({
+            success: true,
+            msg: "GET PATIENT ID",
+            patient: `${dbPat}`,
+            url: `${req.url}`
+        });
+
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        });
+
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later"
+        });
+    }
+
+
+
+}

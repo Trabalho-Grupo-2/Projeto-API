@@ -63,3 +63,37 @@ exports.postPsychologist = async (req, res) => {
         });
     }
 }
+
+exports.getPsychologistById = async function (req, res) {
+
+    console.log("GET PSYCHOLOGIST BY ID")
+
+    try {
+
+        if (!req.body && !req.body.username && !req.body.password)
+            return res.status(400).json({
+                success: false,
+                msg: "Username and password are mandatory"
+            });
+
+        let dbPsy = await Psychologists.findById(req.params.psychologist_id).exec();
+
+        res.status(200).json({
+            success: true,
+            msg: "GET PSYCHOLOGIST ID",
+            patient: `${dbPsy}`,
+            url: `${req.url}`
+        });
+
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        });
+
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later"
+        });
+    }
+}
