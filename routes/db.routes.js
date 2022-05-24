@@ -12,7 +12,6 @@ router.route('/patients')
 router.route('/psychologists')
 .post(dbController.postUser)//
 
-
 router.route('/patients/:patient_id')
 .get(dbController.getUserById)
 .delete(dbController.deleteUserById)
@@ -25,7 +24,6 @@ router.route('/psychologists/:psychologist_id')
 
 router.route('/psychologists/:psychologist_id/:patient_id')
 .get(dbController.getUserById)
-
 
 
 router.all('*', function (req, res) {
