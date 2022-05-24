@@ -4,7 +4,8 @@ const psychologistsController = require("../controllers/psychologists.controller
 let router = express.Router();
 
 
-
+router.route('/')
+.post(psychologistsController.postPsychologist)
 
 
 router.all('*', function (req, res) {

@@ -3,11 +3,9 @@ const patientsController = require("../controllers/patients.controller");
 
 let router = express.Router();
 
+
 router.route('/')
 .post(patientsController.postPatient)
-
-
-
 
 
 router.all('*', function (req, res) {

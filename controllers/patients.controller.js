@@ -1,6 +1,6 @@
 const db = require("../models/index.js");
 
-const jwt = require("jsonwebtoken");
+//const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const Patients = db.patients;

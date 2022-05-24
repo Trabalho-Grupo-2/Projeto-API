@@ -30,10 +30,10 @@ module.exports = (mongoose) => {
             required: [false]
         },
 
-        patients: {
+        patients: [{
             type: mongoose.Schema.Types.ObjectId,
-            re: "patients"
-        }
+            ref: "patients"
+        }]
     }, {
         timestamps: false
     });
