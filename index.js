@@ -19,12 +19,12 @@ app.get('/', function (req, res) {
     });
 });
 
-app.use('/admins', require('./routes/admins.routes.js'))
 app.use('/patients', require('./routes/patients.routes.js'))
-app.use('/emotions', require('./routes/emotions.routes.js'))
 app.use('/psychologists', require('./routes/psychologists.routes.js'))
 
-//app.use('/', require('./routes/db.routes.js'))
+app.use('/admins', require('./routes/admins.routes.js'))
+app.use('/emotions', require('./routes/emotions.routes.js'))
+
 
 app.all('*', function (req, res) {
     res.status(404).json({

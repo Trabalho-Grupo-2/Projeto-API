@@ -97,3 +97,33 @@ exports.getPsychologistById = async function (req, res) {
         });
     }
 }
+
+exports.deletePsychologistById = async (req, res) => {
+
+    console.log("DELETE PSYCHOLOGIST BY ID");
+    
+    const id = req.params.psychologist_id
+
+    try {
+
+        await Psychologists.findByIdAndRemove(id).exec()
+
+        res.status(200).json({
+            success: true,
+            msg: "DELETE PSYCHOLOGIST ID",
+            patient: `${id}`,
+            url: `${req.url}`
+        });
+
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        });
+
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later"
+        });
+    }
+}

@@ -7,18 +7,18 @@ router.route('/login')
 .post(dbController.getUser)
 
 router.route('/patients')
-.post(dbController.postUser)//
+.post(dbController.postUser) //DONE
 
 router.route('/psychologists')
-.post(dbController.postUser)//
+.post(dbController.postUser) //DONE
 
 router.route('/patients/:patient_id')
-.get(dbController.getUserById)
+.get(dbController.getUserById)  //DONE
 .delete(dbController.deleteUserById)
 .patch(dbController.patchUserById)
 
 router.route('/psychologists/:psychologist_id')
-.get(dbController.getUserById)
+.get(dbController.getUserById)  //DONE
 .delete(dbController.deleteUserById)
 .patch(dbController.patchUserById)
 

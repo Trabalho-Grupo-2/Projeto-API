@@ -9,6 +9,7 @@ router.route('/')
 
 router.route('/:patient_id')
 .get(patientsController.getPatientById)
+.delete(patientsController.deletePatientById)
 
 
 router.all('*', function (req, res) {
