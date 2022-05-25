@@ -68,6 +68,8 @@ exports.getPsychologistById = async function (req, res) {
 
     console.log("GET PSYCHOLOGIST BY ID")
 
+    const id = req.params.psychologist_id
+
     try {
 
         if (!req.body && !req.body.username && !req.body.password)
@@ -76,7 +78,7 @@ exports.getPsychologistById = async function (req, res) {
                 msg: "Username and password are mandatory"
             });
 
-        let dbPsy = await Psychologists.findById(req.params.psychologist_id).exec();
+        let dbPsy = await Psychologists.findById(id).exec();
 
         res.status(200).json({
             success: true,
@@ -126,4 +128,36 @@ exports.deletePsychologistById = async (req, res) => {
             msg: "Something went wrong. Please try again later"
         });
     }
+}
+
+exports.patchPsychologistById = async (req, res) => {
+
+    console.log("PATCH PSYCHOLOGIST BY ID");
+
+    try {
+
+        const id = req.params.psychologist_id
+
+        let dbPsy = await Psychologists.findById(id).exec();
+        console.log(dbPsy)
+
+        res.status(200).json({
+            success: true,
+            msg: "PATCH PSYCHOLOGIST ID",
+            patient: `${dbPsy}`,
+            url: `${req.url}`
+        });
+
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        });
+
+        res.status(500).json({
+            success: false,
+            msg: "Something went wrong. Please try again later"
+        });
+    }
+
 }

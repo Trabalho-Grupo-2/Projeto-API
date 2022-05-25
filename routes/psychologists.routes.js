@@ -10,6 +10,7 @@ router.route('/')
 router.route('/:psychologist_id')
 .get(psychologistsController.getPsychologistById)
 .delete(psychologistsController.deletePsychologistById)
+.patch(psychologistsController.patchPsychologistById)
 
 router.all('*', function (req, res) {
     res.status(404).json({ sucess: false, message: 'EmoChamp: Route Not Found' });
