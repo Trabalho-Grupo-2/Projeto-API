@@ -34,16 +34,16 @@ exports.postPsychologist = async (req, res) => {
                 msg: "Username and password are mandatory"
             });
 
-            const psychologist = new Psychologists({
-                name: req.body.name,
-                email: req.body.email,
-                password: bcrypt.hashSync(req.body.password, 10),
-                description: "",
-                avatar: "",
-                patients: []
-            })
-            let newpsy = await psychologist.save()
-            id = newpsy._id
+        const psychologist = new Psychologists({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 10),
+            description: "",
+            avatar: "",
+            patients: []
+        })
+        let newpsy = await psychologist.save()
+        id = newpsy._id
 
         return res.status(201).json({
             success: true,
@@ -64,7 +64,7 @@ exports.postPsychologist = async (req, res) => {
     }
 }
 
-exports.getPsychologistById = async function (req, res) {
+exports.getPsychologistById = async (req, res) => {
 
     console.log("GET PSYCHOLOGIST BY ID")
 
@@ -103,7 +103,7 @@ exports.getPsychologistById = async function (req, res) {
 exports.deletePsychologistById = async (req, res) => {
 
     console.log("DELETE PSYCHOLOGIST BY ID");
-    
+
     const id = req.params.psychologist_id
 
     try {
@@ -139,7 +139,26 @@ exports.patchPsychologistById = async (req, res) => {
         const id = req.params.psychologist_id
 
         let dbPsy = await Psychologists.findById(id).exec();
-        console.log(dbPsy)
+
+        if (dbPsy.name != req.body.name) {
+            dbPsy.name = req.body.name
+        }
+
+        if (dbPsy.email != req.body.email) {
+            dbPsy.email = req.body.email
+        }
+
+        if (dbPsy.description != req.body.description) {
+            dbPsy.description = req.body.description
+        }
+
+        if (dbPsy.avatar != req.body.avatar) {
+            dbPsy.avatar = req.body.avatar
+        }
+
+        await Psychologists.findByIdAndUpdate(id, dbPsy, {
+            useFindAndModify: false
+        }).exec();
 
         res.status(200).json({
             success: true,
