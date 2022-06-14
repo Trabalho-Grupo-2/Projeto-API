@@ -5,12 +5,12 @@ let router = express.Router();
 
 
 router.route('/')
-.post(patientsController.postPatient)
+.post(patientsController.postPatient) //DONE
 
 router.route('/:patient_id')
-.get(patientsController.getPatientById)
-.delete(patientsController.deletePatientById)
-.patch(patientsController.patchPatientById)
+.get(patientsController.getPatientById) //DONE
+.delete(patientsController.deletePatientById) //DONE
+.patch(patientsController.patchPatientById) //DONE
 
 
 router.all('*', function (req, res) {

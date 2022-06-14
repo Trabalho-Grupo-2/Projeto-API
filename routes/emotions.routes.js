@@ -4,6 +4,7 @@ const emotionsControllers = require("../controllers/emotions.controller");
 let router = express.Router();
 
 
+router.route('/emotion')
 
 
 

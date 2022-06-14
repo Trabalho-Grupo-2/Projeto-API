@@ -143,7 +143,25 @@ exports.patchPatientById = async (req, res) => {
 
         let dbPat = await Patients.findById(id).exec();
 
-        console.log(dbPat)
+        if (dbPat.name != req.body.name) {
+            dbPat.name = req.body.name
+        }
+
+        if (dbPat.email != req.body.email) {
+            dbPat.email = req.body.email
+        }
+
+        if (dbPat.description != req.body.description) {
+            dbPat.description = req.body.description
+        }
+
+        if (dbPat.avatar != req.body.avatar) {
+            dbPat.avatar = req.body.avatar
+        }
+
+        await Patients.findByIdAndUpdate(id, dbPat, {
+            useFindAndModify: false
+        }).exec();
 
         res.status(200).json({
             success: true,

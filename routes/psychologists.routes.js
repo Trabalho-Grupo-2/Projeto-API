@@ -5,12 +5,14 @@ let router = express.Router();
 
 
 router.route('/')
-.post(psychologistsController.postPsychologist)
+.post(psychologistsController.postPsychologist) //DONE
 
 router.route('/:psychologist_id')
-.get(psychologistsController.getPsychologistById)
-.delete(psychologistsController.deletePsychologistById)
-.patch(psychologistsController.patchPsychologistById)
+.get(psychologistsController.getPsychologistById) //DONE
+.delete(psychologistsController.deletePsychologistById) //DONE
+.patch(psychologistsController.patchPsychologistById) //DONE
+
+//router.route('/psychologists/:psychologist_id/:patient_id').get(dbController.getUserById)
 
 router.all('*', function (req, res) {
     res.status(404).json({ sucess: false, message: 'EmoChamp: Route Not Found' });
