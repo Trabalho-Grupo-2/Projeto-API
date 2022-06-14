@@ -19,6 +19,8 @@ app.get('/', function (req, res) {
     });
 });
 
+app.use('/login', require('./routes/login.routes.js'))
+
 app.use('/patients', require('./routes/patients.routes.js'))
 app.use('/psychologists', require('./routes/psychologists.routes.js'))
 

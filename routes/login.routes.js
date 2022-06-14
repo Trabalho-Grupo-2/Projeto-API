@@ -1,12 +1,11 @@
 const express = require('express');
-const adminsController = require("../controllers/admins.controller");
+const loginController = require("../controllers/login.controller");
 
 let router = express.Router();
 
+
 router.route('/')
-.post(adminsController.postAdmin) //DONE
-
-
+.post(loginController.login)
 
 
 router.all('*', function (req, res) {

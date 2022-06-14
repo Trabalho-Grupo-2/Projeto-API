@@ -6,8 +6,6 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.URL;
 
-
-
 (async () => {
     try {
         await db.mongoose.connect(db.url, {

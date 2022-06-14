@@ -132,7 +132,6 @@ exports.deletePatientById = async (req, res) => {
     }
 }
 
-
 exports.patchPatientById = async (req, res) => {
 
     console.log("PATCH PATIENT BY ID");
