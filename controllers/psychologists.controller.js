@@ -72,12 +72,6 @@ exports.getPsychologistById = async (req, res) => {
 
     try {
 
-        if (!req.body && !req.body.username && !req.body.password)
-            return res.status(400).json({
-                success: false,
-                msg: "Username and password are mandatory"
-            });
-
         let dbPsy = await Psychologists.findById(id).exec();
 
         res.status(200).json({
