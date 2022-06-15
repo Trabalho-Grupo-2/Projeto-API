@@ -1,11 +1,27 @@
 const express = require('express');
+
 const emotionsControllers = require("../controllers/emotions.controller");
 
 let router = express.Router();
 
+const multer = require('multer');
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'C:/Users/alfon/Downloads') // set up a directory where all files will be saved
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now()) // give the files a new identifier
+    }
+})
+// acccepts a single file upload: specifies the field name where multer looks for the file
+const multerUploads = multer({
+    storage
+}).single('image');
+
+
 
 router.route('/')
-    .post(emotionsControllers.postEmotion)
+    .post(multerUploads, emotionsControllers.postEmotion)
 
 router.route('/:emotion_id')
     .get(emotionsControllers.getEmotionById)

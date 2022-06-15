@@ -1,4 +1,5 @@
 const db = require("../models/index.js");
+const cloudinary = require('../config/cloud.config.js');
 
 const Emotions = db.emotions;
 
@@ -7,6 +8,16 @@ exports.postEmotion = async (req, res) => {
     console.log("POST EMOTION")
 
     try {
+
+        let user_image = null;
+        if (req.file) {
+            // upload image
+            user_image = await cloudinary.uploader.upload(req.file.path);
+        }
+
+        console.log(user_image.url)
+        console.log(user_image.public_id)
+
         let id
 
         let emotion = await Emotions.findOne({
