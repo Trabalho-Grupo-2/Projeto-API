@@ -68,7 +68,7 @@ exports.postPatient = async (req, res) => {
 
 exports.getPatientById = async (req, res) => {
 
-    console.log("GET PATIENT BY ID")
+    console.log("GET EMOTION BY ID")
 
     const id = req.params.patient_id
 
