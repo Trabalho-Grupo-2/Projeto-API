@@ -11,13 +11,13 @@ exports.postEmotion = async (req, res) => {
 
         let user_image = null;
 
-        if (req.file) {
-            // upload image
-            user_image = await cloudinary.uploader.upload(req.file.path);
-        }
+        // if (req.file) {
+        //     // upload image
+        //     user_image = await cloudinary.uploader.upload(req.file.path);
+        // }
 
-        console.log(user_image.url)
-        console.log(user_image.public_id)
+        // console.log(user_image.url)
+        // console.log(user_image.public_id)
 
         let emotion = await Emotions.findOne({
             name: req.body.name
