@@ -3,52 +3,48 @@ const cloudinary = require('../config/cloud.config.js');
 
 const Emotions = db.emotions;
 
-exports.postEmotion = async (req, res) => {
+exports.postImage = async (req, res) => {
 
-    console.log("POST EMOTION")
+    console.log("POST IMAGE")
 
     try {
 
-        let user_image = null;
-        if (req.file) {
-            // upload image
-            user_image = await cloudinary.uploader.upload(req.file.path);
-        }
+        if (!req.body && !req.body.name)
+            return res.status(400).json({
+                success: false,
+                msg: "Emotion Missing"
+            });
 
-        console.log(user_image.url)
-        console.log(user_image.public_id)
-
-        let id
+        if (!req.file)
+            return res.status(400).json({
+                success: false,
+                msg: "Image Missing"
+            });
 
         let emotion = await Emotions.findOne({
             name: req.body.name
         });
 
-        if (emotion != null) {
+        if (emotion == null) {
             return res.status(401).json({
                 success: false,
-                msgs: "Emotion name already exists"
+                msgs: "Emotion name dosen't exists"
             })
         }
 
-        if (!req.body && !req.body.name)
-            return res.status(400).json({
-                success: false,
-                msg: "name is mandatory"
-            });
+        let user_image = await cloudinary.uploader.upload(req.file.path);
 
-        emotion = new Emotions({
-            name: req.body.name,
-            image: user_image.url
-        })
+        emotion.pictures.push(user_image.url)
 
-        let newEmotion = await emotion.save()
-        id = newEmotion._id
+        await Emotions.findByIdAndUpdate(emotion.id, emotion, {
+            useFindAndModify: false
+        }).exec();
+
 
         return res.status(201).json({
             success: true,
-            msg: "New Emotion created.",
-            URL: `/emotion/${id}`
+            msg: "New Image created.",
+            URL: `/emotion/${user_image.public_id}`
         });
 
     } catch (err) {
@@ -123,47 +119,4 @@ exports.deleteEmotionById = async (req, res) => {
             msg: "Something went wrong. Please try again later"
         });
     }
-}
-
-exports.patchEmotionById = async (req, res) => {
-
-    console.log("PATCH EMOTION BY ID");
-
-    try {
-
-        const id = req.params.emotion_id
-
-        let dbEmotion = await Emotions.findById(id).exec();
-
-        if (dbEmotion.name != req.body.name) {
-            dbEmotion.name = req.body.name
-        }
-
-        if (dbEmotion.path != req.body.path) {
-            dbEmotion.path = req.body.path
-        }
-
-        await Emotions.findByIdAndUpdate(id, dbEmotion, {
-            useFindAndModify: false
-        }).exec();
-
-        res.status(200).json({
-            success: true,
-            msg: "PATCH EMOTION ID",
-            patient: `${dbEmotion}`,
-            url: `${req.url}`
-        });
-
-    } catch (err) {
-        res.status(400).json({
-            success: false,
-            msg: err.message
-        });
-
-        res.status(500).json({
-            success: false,
-            msg: "Something went wrong. Please try again later"
-        });
-    }
-
 }

@@ -22,14 +22,11 @@ const multerUploads = multer({
 
 
 router.route('/')
-    .post(multerUploads, emotionsControllers.postEmotion)
+    .post(multerUploads, emotionsControllers.postImage)
 
 router.route('/:emotion_id')
     .get(emotionsControllers.getEmotionById)
     .delete(emotionsControllers.deleteEmotionById)
-    .patch(emotionsControllers.patchEmotionById)
-//.post(emotionsControllers.postPathByEmotion)
-
 
 
 router.all('*', function (req, res) {
