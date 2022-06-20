@@ -1,7 +1,8 @@
 const config = {
     USER: process.env.DB_USER,
     PASSWORD: process.env.DB_PASSWORD,
-    DB: process.env.DB_NAME
+    DB: process.env.DB_NAME,
+    SECRET: process.env.SECRET
 };
 
 config.URL = `mongodb+srv://${config.USER}:${config.PASSWORD}@cluster0.be5td.mongodb.net/${config.DB}?retryWrites=true&w=majority`;
