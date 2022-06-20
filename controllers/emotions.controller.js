@@ -12,7 +12,7 @@ exports.postImage = async (req, res) => {
         if (!req.body && !req.body.name)
             return res.status(400).json({
                 success: false,
-                msg: "Emotion Missing"
+                msg: "Emotion name Missing"
             });
 
         if (!req.file)
@@ -34,7 +34,7 @@ exports.postImage = async (req, res) => {
 
         let user_image = await cloudinary.uploader.upload(req.file.path);
 
-        emotion.pictures.push(user_image.url)
+        emotion.pictures.push(user_image.public_id)
 
         await Emotions.findByIdAndUpdate(emotion.id, emotion, {
             useFindAndModify: false
@@ -44,7 +44,7 @@ exports.postImage = async (req, res) => {
         return res.status(201).json({
             success: true,
             msg: "New Image created.",
-            URL: `/emotion/${user_image.public_id}`
+            URL: `${user_image.url}`
         });
 
     } catch (err) {
@@ -61,21 +61,27 @@ exports.postImage = async (req, res) => {
 
 }
 
-exports.getEmotionById = async (req, res) => {
+exports.getEmotionByName = async (req, res) => {
 
-    console.log("GET EMOTION BY ID")
-
-    const id = req.params.emotion_id
+    console.log("GET EMOTION BY NAME")
 
     try {
 
-        let dbEmotion = await Emotions.findById(id).exec();
+        let emotion = await Emotions.findOne({
+            name: req.params.emotion_name
+        });
+
+        if (emotion == null) {
+            return res.status(401).json({
+                success: false,
+                msgs: "Emotion name dosen't exists"
+            })
+        }
 
         res.status(200).json({
             success: true,
-            msg: "GET EMOTION ID",
-            patient: `${dbEmotion}`,
-            url: `${req.url}`
+            msg: "GET EMOTION",
+            emotion: `${emotion}`
         });
 
     } catch (err) {
@@ -91,20 +97,40 @@ exports.getEmotionById = async (req, res) => {
     }
 }
 
-exports.deleteEmotionById = async (req, res) => {
+exports.deleteImageById = async (req, res) => {
 
-    console.log("DELETE EMOTION BY ID");
-
-    const id = req.params.emotion_id
+    console.log("DELETE IMAGE BY ID");
 
     try {
 
-        await Emotions.findByIdAndRemove(id).exec()
+        let emotion = await Emotions.findOne({
+            name: req.params.emotion_name
+        });
+
+        if (emotion == null) {
+            return res.status(401).json({
+                success: false,
+                msgs: "Emotion name dosen't exists"
+            })
+        }
+
+        let index = emotion.pictures.indexOf(req.params.image_id)
+
+        if (index == -1)
+            return res.status(401).json({
+                success: false,
+                msgs: "Image id dosen't exists"
+            })
+
+        emotion.pictures.splice(index, 1)
+
+        await Emotions.findByIdAndUpdate(emotion.id, emotion, {
+            useFindAndModify: false
+        }).exec();
 
         res.status(200).json({
             success: true,
-            msg: "DELETE EMOTION ID",
-            patient: `${id}`,
+            msg: "DELETE IMAGE",
             url: `${req.url}`
         });
 

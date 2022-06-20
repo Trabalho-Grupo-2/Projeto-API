@@ -20,13 +20,14 @@ const multerUploads = multer({
 }).single('image');
 
 
-
 router.route('/')
     .post(multerUploads, emotionsControllers.postImage)
 
-router.route('/:emotion_id')
-    .get(emotionsControllers.getEmotionById)
-    .delete(emotionsControllers.deleteEmotionById)
+router.route('/:emotion_name')
+    .get(emotionsControllers.getEmotionByName)
+
+router.route('/:emotion_name/:image_id')
+    .delete(emotionsControllers.deleteImageById)
 
 
 router.all('*', function (req, res) {
