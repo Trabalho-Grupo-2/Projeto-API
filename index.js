@@ -34,4 +34,4 @@ app.all('*', function (req, res) {
     });
 })
 
-app.listen(port, host, () => console.log(`App listening at http://${host}:${port}/`));
+//app.listen(port, host, () => console.log(`App listening at http://${host}:${port}/`));
