@@ -13,6 +13,7 @@ module.exports = (mongoose) => {
         }
 
     );
+    
     // creates a new model Tutorial using the defined schema above
     const Emotions = mongoose.model("emotions", schema);
     return Emotions;
