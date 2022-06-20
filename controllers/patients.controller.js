@@ -28,7 +28,7 @@ exports.postPatient = async (req, res) => {
             })
         }
 
-        if (!req.body && !req.body.username && !req.body.password)
+        if (!req.body && !req.body.name && !req.body.password)
             return res.status(400).json({
                 success: false,
                 msg: "Username and password are mandatory"
