@@ -10,6 +10,7 @@ exports.postEmotion = async (req, res) => {
     try {
 
         let user_image = null;
+
         if (req.file) {
             // upload image
             user_image = await cloudinary.uploader.upload(req.file.path);
@@ -17,8 +18,6 @@ exports.postEmotion = async (req, res) => {
 
         console.log(user_image.url)
         console.log(user_image.public_id)
-
-        let id
 
         let emotion = await Emotions.findOne({
             name: req.body.name
@@ -31,7 +30,7 @@ exports.postEmotion = async (req, res) => {
             })
         }
 
-        if (!req.body && !req.body.name && !req.body.path)
+        if (!req.body && !req.body.name)
             return res.status(400).json({
                 success: false,
                 msg: "name and path are mandatory"
@@ -39,7 +38,7 @@ exports.postEmotion = async (req, res) => {
 
         emotion = new Emotions({
             name: req.body.name,
-            path: req.body.path
+            pictures: []
         })
 
         let newEmotion = await emotion.save()
@@ -73,7 +72,7 @@ exports.getEmotionById = async (req, res) => {
 
     try {
 
-        let dbEmotion = await Emotion.findById(id).exec();
+        let dbEmotion = await Emotions.findById(id).exec();
 
         res.status(200).json({
             success: true,
@@ -127,7 +126,7 @@ exports.deleteEmotionById = async (req, res) => {
 
 exports.patchEmotionById = async (req, res) => {
 
-    console.log("PATCH PATIENT BY ID");
+    console.log("PATCH EMOTION BY ID");
 
     try {
 

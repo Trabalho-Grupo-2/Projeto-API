@@ -7,7 +7,7 @@ module.exports = (mongoose) => {
             name: {
                 type: String
             },
-            path: {
+            pictures: {
                 type: Array
             }
         }
