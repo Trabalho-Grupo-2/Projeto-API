@@ -1,8 +1,8 @@
 {
+  "start": "npm start",
   "name": "express-emochamp-restapi-mongoose",
   "version": "1.0.0",
   "main": "index.js",
-  "start": "npm start",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
