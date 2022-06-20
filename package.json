@@ -1,5 +1,5 @@
 {
-  "name": "express-restapi-tutorials-mongoose",
+  "name": "express-emochamp-restapi-mongoose",
   "version": "1.0.0",
   "main": "index.js",
   "start": "npm start",
